@@ -18,10 +18,7 @@ class VideoRepositoryAdapter : VideoRepository {
     override fun all(): List<Video> = videos.toList()
 
     override fun latest(): Video? {
-        return if (videos.isNotEmpty()) {
-            videos.last()
-        } else {
-            null
-        }
+        return videos.sortedByDescending { it.createdAt }
+            .firstOrNull()
     }
 }

@@ -18,7 +18,7 @@ constructor(
         val latestVideo = latestVideoFinder.findLastVideo()
         return when (latestVideo) {
             null -> ResponseEntity.notFound().build<Nothing>()
-            else -> ResponseEntity.ok().body("Latest video is ${latestVideo.title}")
+            else -> ResponseEntity.ok().body("Latest video is ${latestVideo.title.value}")
         }
     }
 }
