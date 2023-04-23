@@ -1,11 +1,11 @@
 package com.codely.api.application
 
 import com.codely.api.domain.*
+import com.codely.api.infrastructure.PublishedVideoNotifierAdapter
 import com.codely.shared.domain.courses.CourseId
 import org.springframework.stereotype.Component
 import java.time.Instant
 
-data class CreatedVideo(val id: VideoId)
 @Component
 data class VideoCreator(val repository: VideoRepository) {
 
@@ -16,8 +16,10 @@ data class VideoCreator(val repository: VideoRepository) {
         url: VideoUrl,
         courseId: CourseId,
         createdAt: Instant,
-    ): Video =
-        Video.create(id, type, title, url, courseId, createdAt)
+    ): Video {
+    val notifier: VideoNotifier = PublishedVideoNotifierAdapter()
+        return Video.create(id, type, title, url, courseId, createdAt)
             .also(repository::save)
-
+            .also { notifier.notify("Video published at $createdAt") }
+    }
 }

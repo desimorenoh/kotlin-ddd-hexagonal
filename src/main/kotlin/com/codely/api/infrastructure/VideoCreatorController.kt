@@ -25,9 +25,10 @@ data class VideoResponse(
     val url: VideoUrl,
     val courseId: CourseId,
     val createdAt: Instant,
+    val message: String,
 ) {
     companion object {
-        fun fromVideo(video: Video): VideoResponse {
+        fun fromVideo(video: Video, message: String): VideoResponse {
             return VideoResponse(
                 id = video.id,
                 type = video.type,
@@ -35,6 +36,7 @@ data class VideoResponse(
                 url = video.url,
                 courseId = video.courseId,
                 createdAt = video.createdAt,
+                message = message
             )
         }
     }
@@ -47,7 +49,7 @@ class VideoCreatorController
 @Autowired
 constructor(
     private val handler: VideoCreator,
-
+    private val notifier: VideoNotifier,
     ) {
     @PostMapping("/videos/create")
     fun createVideo(@RequestBody request: VideoRequest): ResponseEntity<VideoResponse> {
@@ -58,8 +60,10 @@ constructor(
             url = request.url,
             courseId = request.courseId,
             createdAt = Instant.now(),
-        )
-        return ResponseEntity.ok().body(VideoResponse.fromVideo(video))
 
+        )
+        val message = "Video published at ${Instant.now()}"
+        notifier.notify(message)
+        return ResponseEntity.ok().body(VideoResponse.fromVideo(video, message))
     }
 }
