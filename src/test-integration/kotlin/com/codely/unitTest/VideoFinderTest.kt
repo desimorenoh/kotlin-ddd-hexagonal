@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test
 
 class VideoFinderTest {
     private val repository = VideoRepositoryInMemory()
+
     @Test
     fun `should find a video`() {
         val id = aVideo("1")
