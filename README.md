@@ -5,7 +5,7 @@
 </p>
 
 <h1 align="center">
-  💎 Kotlin HTTP API Skeleton
+  💎 Curso Kotlin DDD - Arquitectura Hexagonal 
 </h1>
 
 <p align="center">
@@ -15,30 +15,19 @@
 </p>
 
 <p align="center">
-  Template intended to serve as a starting point if you want to <strong>bootstrap a Kotlin HTTP API</strong>.
+Hecho a partir de esta template como starting point de una <strong>Kotlin HTTP API</strong>.
   <br />
   <br />
   Take a look, play and have fun with this.
   <a href="https://github.com/CodelyTV/kotlin-api-skeleton/stargazers">Stars are welcome 😊</a>
 </p>
 
-This is a repository intended to serve as a starting point if you want to bootstrap an API in Kotlin.
-
-## ☝️ Introduction
-
-It could be useful if you want to start from scratch a kata or a little exercise or project. The idea is that you don't have to worry about the boilerplate
-* Latest stable kotlin version
-* Latest stable Springboot version
-* Latest stable Springboot version
-* Latest stable java version
-* Best practices applied
-* Some useful resources to start coding
 
 ## 🌎 How To Start
 
 You could manually clone [this repo](https://github.com/CodelyTV/kotlin-api-skeleton) or just us it as a template
 
-### Cloning the repository
+### Cloning the initial repository
 
 We recommend to follow the next step by step process in order to avoid adding the bootstrap project commits to your project Git history:
 
