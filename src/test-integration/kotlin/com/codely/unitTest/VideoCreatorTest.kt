@@ -2,33 +2,27 @@ package com.codely.unitTest
 
 import com.codely.api.application.VideoCreator
 import com.codely.api.domain.*
-import com.codely.api.infrastructure.VideoRequest
-import com.codely.shared.domain.courses.CourseId
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import java.time.Instant
+import java.time.LocalDate
+import java.time.Month
+import java.time.ZoneOffset
 
 class VideoCreatorTest {
     private val repository = VideoRepositoryInMemory()
     private val handler = VideoCreator(repository)
+
     @Test
     fun `should create a video`() {
-        val request = VideoRequest(
-            type = VideoType.INTERVIEW,
-            title = VideoTitle("title"),
-            url = VideoUrl("url"),
-            courseId = CourseId("courseId"),
+        val newVideo: Video = aVideo(
+            id = "1", createdAt = LocalDate.of(2023, Month.JANUARY, 12).atStartOfDay().toInstant(
+                ZoneOffset.UTC
+            )
         )
 
-        val video = handler.handle(
-            id = VideoId(),
-            type = request.type,
-            title = request.title,
-            url = request.url,
-            courseId = request.courseId,
-            createdAt = Instant.now(),
-        )
+        handler.handle(newVideo)
+        val saved = repository.search(VideoId("1"))
 
-        assertThat(repository.search(video.id)).isEqualTo(video)
+        assertThat(saved).isEqualTo(newVideo)
     }
 }

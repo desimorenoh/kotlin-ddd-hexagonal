@@ -43,25 +43,25 @@ data class VideoResponse(
 }
 
 
-
 @RestController
 class VideoCreatorController
 @Autowired
 constructor(
     private val handler: VideoCreator,
     private val notifier: VideoNotifier,
-    ) {
+) {
     @PostMapping("/videos/create")
     fun createVideo(@RequestBody request: VideoRequest): ResponseEntity<VideoResponse> {
-       val video = handler.handle(
+        val video = Video.create(
             id = VideoId(),
             type = request.type,
             title = request.title,
             url = request.url,
             courseId = request.courseId,
-            createdAt = Instant.now(),
-
+            createdAt = Instant.now()
         )
+        handler.handle(video)
+
         val message = "Video published at ${Instant.now()}"
         notifier.notify(message)
         return ResponseEntity.ok().body(VideoResponse.fromVideo(video, message))
